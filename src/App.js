@@ -1,19 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
 import './App.css'
+import List from './components/List'
 
 export default function App() {
   const [todoData, setTodoData] = useState([])
   const [value, setValue] = useState('')
-
-  const btnStyle = {
-    color: '#fff',
-    border: 'none',
-    padding: '5px 9px',
-    borderRadius: '50%',
-    cursor: 'pointer',
-    float: 'right',
-  }
 
   const getStyle = (completed) => {
     return {
@@ -65,15 +57,7 @@ export default function App() {
         <div className="title">
           <h1>할 일 목록</h1>
         </div>
-        {todoData.map((data) => (
-          <div key={data.id} style={getStyle(data.completed)}>
-            <input type="checkbox" defaultChecked={false} onChange={() => handleCompleteChange(data.id)} />
-            {data.title}
-            <button style={btnStyle} onClick={() => handleClick(data.id)}>
-              x
-            </button>
-          </div>
-        ))}
+        <List todoData={todoData} />
 
         <form style={{ display: 'flex' }} onSubmit={handleSubmit}>
           <input

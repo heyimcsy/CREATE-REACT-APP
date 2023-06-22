@@ -1,5 +1,6 @@
 import React from 'react'
 import List from './List'
+
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 const Lists = React.memo(({ todoData, setTodoData, handleClick }) => {
@@ -14,6 +15,7 @@ const Lists = React.memo(({ todoData, setTodoData, handleClick }) => {
 
     newTodoData.splice(result.destination.index, 0, reoderedItem)
     setTodoData(newTodoData)
+    localStorage.setItem('todoData', JSON.stringify(newTodoData))
   }
 
   return (

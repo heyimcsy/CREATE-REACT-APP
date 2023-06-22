@@ -4,9 +4,10 @@ import './App.css'
 import Form from './components/Form'
 import Lists from './components/Lists'
 
-export default function App() {
-  console.log('App Component')
-  const [todoData, setTodoData] = useState([])
+const initialTodoData = localStorage.getItem('todoData') ? JSON.parse(localStorage.getItem('todoData')) : []
+
+function App() {
+  const [todoData, setTodoData] = useState(initialTodoData)
   const [value, setValue] = useState('')
 
   const handleClick = useCallback(
@@ -14,6 +15,7 @@ export default function App() {
       let newTodoData = todoData.filter((data) => data.id !== id)
       console.log('newTodoData', newTodoData)
       setTodoData(newTodoData)
+      localStorage.setItem('todoData', JSON.stringify(newTodoData))
     },
     [todoData]
   )
@@ -31,12 +33,16 @@ export default function App() {
 
     // 원래 있던 할 일에 새로운 할 일 더해주기
     setTodoData((prev) => [...prev, newTodo])
+    localStorage.setItem('todoData', JSON.stringify([...todoData, newTodo]))
+
     setValue('')
   }
 
   const handleRemoveClick = () => {
     setTodoData([])
+    localStorage.setItem('todoData', JSON.stringify([]))
   }
+
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-blue-100">
       <div className="w-full p-6 m-4 bg-white rounded shadow lg:max-w-lg">
@@ -50,3 +56,5 @@ export default function App() {
     </div>
   )
 }
+
+export default App
